@@ -157,18 +157,18 @@ resource "oci_load_balancer_listener" "https" {
 
 # --- DNS records ---
 
-resource "cloudflare_record" "dns" {
+resource "cloudflare_dns_record" "dns" {
   for_each = toset(var.dns_records)
   zone_id  = var.cloudflare_zone_id
   name     = each.value
   content  = [for ip in oci_load_balancer_load_balancer.lb.ip_address_details : ip.ip_address if ip.is_public][0]
   type     = "A"
   proxied  = true
+  ttl      = 1
 }
 
-resource "cloudflare_zone_settings_override" "ssl" {
-  zone_id = var.cloudflare_zone_id
-  settings {
-    ssl = "strict"
-  }
+resource "cloudflare_zone_setting" "ssl" {
+  zone_id    = var.cloudflare_zone_id
+  setting_id = "ssl"
+  value      = "strict"
 }
