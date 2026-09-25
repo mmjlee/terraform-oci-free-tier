@@ -51,8 +51,8 @@ terraform output -json instances | jq -r '.app.public_ip'  # one instance's IP
 ```hcl
 terraform {
   required_providers {
-    oci    = { source = "oracle/oci",       version = ">= 7.12.0" }
-    random = { source = "hashicorp/random", version = ">= 3.6.0" }
+    oci    = { source = "oracle/oci",       version = ">= 9.3.0" }
+    random = { source = "hashicorp/random", version = ">= 3.9.0" }
   }
 }
 
