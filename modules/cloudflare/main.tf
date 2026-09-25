@@ -28,6 +28,10 @@ resource "cloudflare_origin_ca_certificate" "cert" {
   hostnames          = [var.domain_name, "*.${var.domain_name}"]
   request_type       = "origin-rsa"
   requested_validity = 5475 # 15 years
+
+  lifecycle {
+    ignore_changes = [hostnames]
+  }
 }
 
 # Cloudflare Origin CA RSA root certificate
